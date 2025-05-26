@@ -51,4 +51,19 @@ exports.update = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+
+};
+exports.upload = async (req, res) => {
+  const { name, image, description } = req.body;
+
+  if (!name || !image || !description) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  try {
+    const newCompound = await Compound.create({ name, image, description });
+    res.status(201).json(newCompound);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
